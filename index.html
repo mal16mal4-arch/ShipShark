@@ -1,1 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Ship Prompt Generator</title>
 
+<style>
+body {
+  font-family: Arial;
+  background: linear-gradient(to bottom right, #ffe4f1, #ffffff, #f3e8ff);
+  text-align: center;
+  padding: 30px;
+}
+
+h1 {
+  color: #ff4da6;
+}
+
+button {
+  padding: 10px 15px;
+  margin: 5px;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+}
+
+.category {
+  background: white;
+}
+
+.active {
+  background: linear-gradient(to right, pink, violet);
+  color: white;
+}
+
+#promptBox {
+  background: white;
+  padding: 20px;
+  margin: 20px auto;
+  max-width: 600px;
+  border-radius: 20px;
+  font-size: 18px;
+}
+
+input {
+  padding: 10px;
+  margin: 5px;
+  border-radius: 10px;
+  border: 1px solid pink;
+}
+</style>
+</head>
+
+<body>
+
+<h1>💖 Ship Prompt Generator 💖</h1>
+
+<input id="name1" placeholder="Name 1">
+<input id="name2" placeholder="Name 2">
+
+<br><br>
+
+<button onclick="setCategory('all')">All</button>
+<button onclick="setCategory('fluff')">Fluff</button>
+<button onclick="setCategory('angst')">Angst</button>
+<button onclick="setCategory('romance')">Romance</button>
+
+<div id="promptBox">Click generate!</div>
+
+<button onclick="generate()">Generate Prompt</button>
+
+<script>
+
+let currentCategory = "all";
+
+const prompts = {
+fluff: [
+"[insert name] steals [insert name]'s hoodie",
+"[insert name] and [insert name] have a pillow fight",
+"[insert name] pretends to be asleep so [insert name] carries them",
+"[insert name] wraps [insert name] in a blanket burrito",
+"[insert name] kisses [insert name]'s nose after a snowball fight",
+"[insert name] and [insert name] fall asleep on call",
+"[insert name] gives [insert name] a handmade gift",
+"[insert name] plays with [insert name]'s hair",
+"[insert name] and [insert name] share headphones",
+"[insert name] texts 'come outside' and surprises [insert name]"
+],
+
+angst: [
+"[insert name] waits for [insert name] but they never show up",
+"[insert name] says something they can't take back",
+"[insert name] realizes they love [insert name] too late",
+"[insert name] and [insert name] break up and meet years later",
+"[insert name] still keeps [insert name]'s old hoodie",
+"[insert name] hears their song and freezes",
+"[insert name] says 'I'm fine' but isn't",
+"[insert name] lets [insert name] go even though it hurts",
+"[insert name] sees [insert name] with someone else",
+"[insert name] writes a letter they never send"
+],
+
+romance: [
+"[insert name] confesses to [insert name]",
+"[insert name] and [insert name] slow dance",
+"[insert name] kisses [insert name] during a fight",
+"[insert name] and [insert name] watch the sunset",
+"[insert name] gives [insert name] a promise ring",
+"[insert name] and [insert name] go on a late night drive",
+"[insert name] and [insert name] kiss under fireworks",
+"[insert name] plans a surprise date for [insert name]",
+"[insert name] and [insert name] stargaze together",
+"[insert name] fixes [insert name]'s outfit before an event"
+]
+};
+
+function getAllPrompts() {
+  return [...prompts.fluff, ...prompts.angst, ...prompts.romance];
+}
+
+function setCategory(cat) {
+  currentCategory = cat;
+}
+
+function generate() {
+  let list = currentCategory === "all" ? getAllPrompts() : prompts[currentCategory];
+
+  let prompt = list[Math.floor(Math.random() * list.length)];
+
+  let n1 = document.getElementById("name1").value || "Name 1";
+  let n2 = document.getElementById("name2").value || "Name 2";
+
+  let i = 0;
+  prompt = prompt.replace(/\[insert name\]/g, () => {
+    return i++ % 2 === 0 ? n1 : n2;
+  });
+
+  document.getElementById("promptBox").innerText = prompt;
+}
+
+</script>
+
+</body>
+</html>
